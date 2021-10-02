@@ -3,29 +3,28 @@ const axios = require('axios');
 
 async function temps(){
     try {
-        let episodes = (await axios.get(/*TU API*/)).data.results
+        let temperament = (await axios.get("https://api.thedogapi.com/v1/breeds")).data.results
         
-        episodes = episodes.map(e=>{
+        temperament = temperament.map(e=>{
             return {
                name: e.name,
-               episode: e.episode
             }
         })
  
-      episodes = await Promise.all(episodes.map(e=> Episodes.findOrCreate({where:e})))
+        temperament = await Promise.all(temperament.map(e=> Temperament.findOrCreate({where:e})))
  
  
-      return "Episodios cargados exitosamente"
+      return "Se cargo exitosamente"
  
      } catch (error) {
-        return "No se pudo cargar los episodios"
+        return "Ha ocurrido un error"
      }
 }
 
 async function getTemp(req, res, next){
     try {
-       let episodes = await Episodes.findAll()
-     res.json(episodes)
+       let tempe = await Temperament.findAll()
+     res.json(tempe)
 
     } catch (error) {
         next(error)
