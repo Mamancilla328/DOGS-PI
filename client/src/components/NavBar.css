@@ -1,0 +1,43 @@
+.Container{
+    
+    display:flex;
+    justify-content:space-between;
+    padding: 0px 15px;
+    align-items:center;
+    margin-bottom:1.5rem;
+    margin-top: 1.5rem;
+    margin-left: 1.5rem; 
+    margin-right: 1.5rem;
+    background-color: #E98580;
+    opacity: 85%;
+    filter: opacity(22px);
+    border-bottom: 4px solid transparent;
+    border-radius: 9999px;
+}
+
+.homeAdd{
+    
+    border: solid 2px transparent;
+    border-radius: 9999px;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    bottom:0.5rem;
+    top: 0.5rem;
+    background-color: transparent;
+    cursor: pointer;
+    color: #FFA0A0;
+    outline: none !important;   
+
+}
+
+.homeAdd:hover{
+    color: #FFE3E3;
+
+}
+
+.extra{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

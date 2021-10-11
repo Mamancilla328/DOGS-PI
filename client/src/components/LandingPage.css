@@ -1,0 +1,44 @@
+ 
+  .landing {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('./white-dog.jpg');
+    background-size: cover;
+    ;
+  }
+  
+  .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 8rem;
+    cursor: pointer;
+    border: solid 2px transparent ;
+    border-radius: 999px;
+    width: 3rem;
+    height: 3rem;
+    color: #FFA0A0;
+    outline: none !important;
+    animation-duration: 1.5s;
+    animation-name: logo;
+    animation-iteration-count: infinite;
+  }
+
+  .logo:hover{
+    color: #FFE3E3;
+
+}
+  
+  @keyframes logo {
+    50% {
+      width: 700px;
+      height: 300px;
+    }
+  
+    50% {
+      width: 600px;
+      height: 200px;
+    }
+  }

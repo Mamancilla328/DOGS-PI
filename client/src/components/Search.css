@@ -1,0 +1,39 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200&display=swap');
+
+
+.Search{
+    background-color: #FFE3E3;
+    border:none;
+    border-radius: 9999px;
+    font-family: 'Poppins', sans-serif;
+    
+    outline: none;
+    padding-left: 15px;
+    width: 250px;
+}
+.Search:hover{
+    background-color:lavenderblush;
+}
+
+.lupa{
+    display: flex;
+    align-items: center;
+    border: solid 2px transparent;
+    border-radius: 9999px;
+    background-color: transparent;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #FFA0A0;
+    right: 0rem;
+    outline: none !important;
+}
+
+.lupa:hover{
+    color: #FFE3E3;
+}
+
+.form{
+    display: flex;
+    align-items: center;
+}

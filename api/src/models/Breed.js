@@ -13,11 +13,19 @@ sequelize.define('breed', {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    height: {
+    heightMin: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    weight: {
+    heightMax: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    weightMin: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    weightMax: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -26,6 +34,11 @@ sequelize.define('breed', {
     },
     image: {
       type: DataTypes.STRING,
+    },
+    createdInDb: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
     }
   })
 
