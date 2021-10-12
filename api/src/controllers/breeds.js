@@ -29,12 +29,12 @@ async function getDog(req, res, next){
             apiDog = apiDog.map(e=>{
                 return {
                     name: e.name,
-                    heightMin: dog.height.metric.split('-')[0],
-                    heightMax: dog.height.metric.split('-')[1],
-                    weightMin: dog.weight.metric.split('-')[0],
-                    weightMax: dog.weight.metric.split('-')[1],
-                    life_span: dog.life_span,
-                    image: dog.image.url,
+                    heightMin: e.height.metric.split('-')[0],
+                    heightMax: e.height.metric.split('-')[1],
+                    weightMin: e.weight.metric.split('-')[0],
+                    weightMax: e.weight.metric.split('-')[1],
+                    life_span: e.life_span,
+                    image: e.image.url,
                 }
             })
             // console.log (apiDog);

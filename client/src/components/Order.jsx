@@ -18,8 +18,8 @@ function Order() {
         <div className= "ordergral">
             <select onChange={handleSelect} className="order"> 
                   
-                <option selected value="asc">asc</option>
-                <option value="desc">desc</option>
+                <option selected value="asc">Aa-Zz</option>
+                <option value="desc">Zz-Aa</option>
                 
             </select>
         </div>

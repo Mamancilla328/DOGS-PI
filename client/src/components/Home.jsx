@@ -28,7 +28,7 @@ const Home = () => {
 
             {
                 dogs?.result?.length>0 && dogs.result.map((e)=>{
-                    return <Card image={e.image} name={e.name} key={e.id}/>
+                    return <Card image={e.image} name={e.name} id={e.id} temperament={e.temperament}/>
                 })
             }
             </div>

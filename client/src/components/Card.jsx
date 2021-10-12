@@ -2,7 +2,7 @@ import "./Card.css"
 import React from "react"
 import { NavLink } from "react-router-dom";
 
-const Card = ({image, name,id}) => {
+const Card = ({image,name,id,temperament}) => {
     return (
         <div className="card">
             <div className="shadow">
@@ -11,7 +11,7 @@ const Card = ({image, name,id}) => {
             </div>
             <div className="info">
             <NavLink to={`/breeds/${id}`}>{name}</NavLink>
-            <p>temperament</p>
+            <p>{temperament}</p>
             </div>
             </div>
         </div>

@@ -1,0 +1,41 @@
+
+.gral{
+    background-color: #E98580;
+    opacity: 85%;
+    padding: 15px;
+    padding-bottom: 40px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    justify-content: space-around
+
+}
+
+.detail{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.dog{
+    width: 45%;
+    height: 45%;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn{
+
+    border: solid 2px transparent;
+    border-radius: 9999px;
+    background-color: transparent;
+    font-size: 3rem;
+    cursor: pointer;
+    color: white;
+    right: 0rem;
+    outline: none !important;
+}
+
+.btn:hover{
+    color: #FFE3E3;
+}

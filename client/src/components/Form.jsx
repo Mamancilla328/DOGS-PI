@@ -1,86 +1,241 @@
-// import React, { useEffect } from 'react'
-// import {useDispatch, useSelector} from 'react-redux'
-// import { getTemperaments,createDog } from '../Redux/Actions.js'
+import style from './Form.module.css'
+import { getTemperaments } from '../Redux/Actions.js'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
 
 
-// function Form() {
-//     const dispatch = useDispatch()
-//     const {temperament} = useSelector(state => state)
-//     const [formulario,setFormulario] = React.useState({
-//         name:"", 
-//         status:"",
-//         gender:"", 
-//         image:"", 
-//         location:"", 
-//         episode:0
-//     })
-//     useEffect(()=>{
-//         dispatch(getTemperaments())
-//     },[dispatch])
 
-//     const onSubmit = (e)=>{
-//         e.preventDefault()
-//         dispatch(createDog(formulario))
-//         setFormulario({
-//             name:"", 
-//             status:"",
-//             gender:"", 
-//             image:"", 
-//             location:"", 
-//             episode:0
-//         })
-//     }
+function validateForm(input) {
+  let errors = {}
+  if (!input.name) {
+    errors.name = 'Name is required'
+  } else {
+    errors.name = ''
+  }
+  if (!input.weight) {
+    errors.weight = 'Weight is required'
+  } else {
+    errors.weight = ''
+  }
 
-//     const handleOnChange = (e)=>{
-//         setFormulario({
-//             ...formulario,
-//             [e.target.name]: e.target.value
-//         })
-//     }
-//     const handleOnChangeEspecial = (e)=>{
-//         if(formulario.episode.includes(e.target.value)){
-//            let newEpisdoes = formulario.episode.filter(ep => ep !== e.target.value)
-//             setFormulario({
-//                 ...formulario,
-//                episode: newEpisdoes
-//             })
-//         }else{
-//             setFormulario({
-//                 ...formulario,
-//                 episode: [...formulario.episode, e.target.value]
-//             })
-//         }
-//     }
-//     return (
-//         <form onSubmit={onSubmit}>
-//             <label >Name</label>
-//             <input value={formulario.name} onChange={handleOnChange} name="name" type="text" />
-//             <label >Status</label>
-//             <input value={formulario.status} onChange={handleOnChange} name="status" type="text" />
-//             <label >Genre</label>
-//             <input value={formulario.gender} onChange={handleOnChange} name="gender" type="text" />
-//             <label >Location</label>
-//             <input value={formulario.location} onChange={handleOnChange} name="location" type="text" />
-//             <label >image</label>
-//             <input value={formulario.image} onChange={handleOnChange} name="image" type="text" />
-//             <select onChange={handleOnChange} name="temperament"  >
-//             {
-//                 temperament.length > 0 &&
-//                 temperament.map(e =>(
-//                     <option key={e.id} value={e.id}>{e.name}</option>
-//                 ))
-//             }
-//             </select>
-            
-//             <input type="submit" value="Create"/>
-//             {/* {
-//                 formulario?.episode.length > 0 &&
-//                 formulario.episode.map(e =>(
-//                     <label>{e}</label>
-//                 ))
-//             } */}
-//         </form>
-//     )
-// }
+  if (!input.height) {
+    errors.height = 'Height is required'
+  } else {
+    errors.height = ''
+  }
+  if (!input.life_span) {
+    errors.life_span = 'Lifespan is required'
+  } else {
+    errors.life_span = ''
+  }
+  return errors
+}
 
-// export default Form
+
+function Create() {
+  const [errors, setErrors] = useState({})
+  const [touched, setTouched] = useState({})
+  const [input, setInput] = useState({
+    name: '',
+    height: '',
+    weight: '',
+    life_span: '',
+    temperament: [],
+  })
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getTemperaments())
+    // eslint-disable-next-line
+  }, [])
+
+  const temperaments = useSelector((state) => state.temperaments)
+
+  
+  function handleInput(e) {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    })
+    setErrors(
+      validateForm({
+        ...input,
+        [e.target.name]: e.target.value,
+      }),
+    )
+  }
+
+  function onFocus(ev) {
+    setTouched({
+      ...touched,
+      [ev.target.name]: true,
+    })
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault()
+    if (!errors.name && !errors.weight && !errors.height && !errors.life_span) {
+      axios
+        .post('/dogs', input)
+        .then((r) => {
+          alert('Your Custom Dog was added to the Database. ╰(*°▽°*)╯')
+          setInput({
+            name: '',
+            height: '',
+            weight: '',
+            life_span: '',
+            temperament: [],
+          })
+        })
+        .catch((res) => alert('Could not create Custom Dog'))
+    } else {
+      alert('Ups... there was a problem ¯_(ツ)_/¯')
+    }
+  }
+
+  function handleSelect(e) {
+    if (input.temperament.includes(parseInt(e.target.value))) {
+      alert('Please, don´t repeat yourself (•_•)')
+    } else {
+      setInput((prev) => ({
+        ...prev,
+        temperament: [...prev.temperament, parseInt(e.target.value)],
+      }))
+    }
+  }
+
+  function deleteTemp(_e, t) {
+    setInput((prev) => ({
+      ...prev,
+      temperament: prev.temperament.filter((temp) => temp !== parseInt(t)),
+    }))
+  }
+
+  function getNames(arr) {
+    let names = []
+    temperaments.forEach((t) => {
+      arr.forEach((id) => {
+        if (parseInt(id) === t.id) {
+          names.push(t.name)
+        }
+      })
+    })
+    return names
+  }
+
+  return (
+    <div className={style.container}>
+      <form onSubmit={handleSubmit}>
+        <div className={style.inputsContainer}>
+          <div className={style.inputContainer}>
+            <p className={style.secondTitle}>Name</p>
+            <input
+              type="text"
+              name="name"
+              placeholder="Dog Name"
+              onChange={handleInput}
+              required="required"
+              onFocus={onFocus}
+              value={input.name}
+              className={style.input}
+            ></input>
+            {errors.name && touched.name && (
+              <p className={style.error}>{errors.name}</p>
+            )}
+          </div>
+
+          <div className={style.inputContainer}>
+            <p className={style.secondTitle}>Weight</p>
+            <input
+              type="text"
+              name="weight"
+              placeholder="Weight Range"
+              onChange={handleInput}
+              required="required"
+              onFocus={onFocus}
+              value={input.weight}
+              className={style.input}
+            ></input>
+            {errors.weight && touched.weight && (
+              <p className={style.error}>{errors.weight}</p>
+            )}
+          </div>
+
+          <div className={style.inputContainer}>
+            <p className={style.secondTitle}>Height</p>
+            <input
+              type="text"
+              name="height"
+              placeholder="Height Range"
+              onChange={handleInput}
+              required="required"
+              onFocus={onFocus}
+              value={input.height}
+              className={style.input}
+            ></input>
+            {errors.height && touched.height && (
+              <p className={style.error}>{errors.height}</p>
+            )}
+          </div>
+
+          <div className={style.inputContainer}>
+            <p className={style.secondTitle}>Life span</p>
+            <input
+              type="text"
+              name="life_span"
+              placeholder="Life span Range"
+              onChange={handleInput}
+              required="required"
+              onFocus={onFocus}
+              value={input.life_span}
+              className={style.input}
+            ></input>
+            {errors.life_span && touched.life_span && (
+              <p className={style.error}>{errors.life_span}</p>
+            )}
+          </div>
+        </div>
+
+        <div className={style.selectTempContainer}>
+          <p className={style.secondTitle}>Temperaments</p>
+          <select
+            name="temperaments"
+            onChange={(e) => handleSelect(e)}
+            className={style.select}
+            required
+            value={input.temperament}
+          >
+            <option>Choose temperament</option>
+
+            {temperaments.map((e) => (
+              <option value={e.id} key={e.id}>
+                {e.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className={style.tempButtons}>
+          {input.temperament.map((t) => (
+            <p id={t} className={style.temperament}>
+              {getNames([t])}{' '}
+              <button
+                type="button"
+                className={style.tempButton}
+                onClick={(e) => deleteTemp(e, t)}
+              >
+                X
+              </button>
+            </p>
+          ))}
+        </div>
+        <button className={style.button} type="submit">
+          Create Dog Breed
+        </button>
+      </form>
+    </div>
+  )
+}
+
+export default Create
